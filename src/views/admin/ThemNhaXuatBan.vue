@@ -8,8 +8,10 @@
             </div>
             <div class="form-group">
                 <label for="Gmail">Gmail:</label>
-                <input type="email" v-model="nxb.Gmail" id="Gmail" required />
+                <input type="email" v-model="nxb.Gmail" id="Gmail" required @blur="kiemTraGmail" />
+                <span v-if="!isGmailValid" class="error">Địa chỉ email không hợp lệ</span>
             </div>
+
             <div class="form-group">
                 <label for="DiaChi">Địa Chỉ:</label>
                 <input type="text" v-model="nxb.DiaChi" id="DiaChi" required />
@@ -36,10 +38,15 @@ export default {
                 Gmail: "",
                 DiaChi: ""
             },
-            thongBao: ""
+            thongBao: "",
+            isGmailValid: true,
         };
     },
     methods: {
+        kiemTraGmail() {
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            this.isGmailValid = regex.test(this.nxb.Gmail);
+        },
         async themNhaXuatBan() {
             try {
                 await NhaXuatBanService.themMoi(this.nxb);

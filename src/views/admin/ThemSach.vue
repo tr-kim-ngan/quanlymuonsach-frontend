@@ -20,12 +20,13 @@
                 <input type="number" v-model="sach.NamXuatBan" id="namXuatBan" required />
             </div>
             <div class="form-group">
-                <label for="nguonGoc">Nguồn Gốc/Tác Giả:</label>
-                <input type="text" v-model="sach.NguonGoc" id="nguonGoc" />
+                <label for="tacGia">Tác Giả:</label>
+                <input type="text" v-model="sach.TacGia" id="tacGia" required />
             </div>
+            
             <div class="form-group">
                 <label for="moTa">Mô Tả:</label>
-                <textarea v-model="sach.MoTa" id="moTa" rows="3"></textarea>
+                <textarea v-model="sach.MoTa" id="moTa" rows="3" required></textarea>
             </div>
             <div class="form-group">
                 <label for="maNXB">Nhà Xuất Bản:</label>
@@ -37,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="anh">Ảnh (Chọn Từ Máy):</label>
-                <input type="file" @change="chonAnh" id="anh" />
+                <input type="file" @change="chonAnh" id="anh" required />
             </div>
             <div class="button-group">
                 <button type="submit" class="btn-submit">Thêm Sách</button>
@@ -60,7 +61,7 @@ export default {
                 SoQuyen: 0,
                 NamXuatBan: 0,
                 MaNXB: "",
-                NguonGoc: "",
+                TacGia: "",
                 MoTa: ""
             },
             danhSachNXB: [],
@@ -86,7 +87,8 @@ export default {
                 formData.append("SoQuyen", this.sach.SoQuyen);
                 formData.append("NamXuatBan", this.sach.NamXuatBan);
                 formData.append("MaNXB", this.sach.MaNXB);
-                formData.append("NguonGoc", this.sach.NguonGoc);
+                formData.append("TacGia", this.sach.TacGia);
+
                 formData.append("MoTa", this.sach.MoTa);
                 if (this.fileAnh) {
                     formData.append("Anh", this.fileAnh);

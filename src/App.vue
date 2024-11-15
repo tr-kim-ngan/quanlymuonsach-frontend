@@ -42,7 +42,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {{ isLoggedIn ? userName : "Tên đăng nhập" }}
+               {{ isAdmin && isLoggedIn ? userName : "Tên đăng nhập" }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <!-- Thông tin admin -->
@@ -68,32 +68,32 @@
                 </li>
 
                 <!-- Thông tin khách hàng -->
-                <li v-if="isCustomer || !isLoggedIn">
+                <!-- <li v-if="isCustomer ">
                   <a class="dropdown-item">
                     <strong>Họ Lót:</strong> {{ userFirstName || "" }}
                   </a>
-                </li>
-                <li v-if="isCustomer || !isLoggedIn">
+                </li> -->
+                <li v-if="isCustomer ">
                   <a class="dropdown-item">
                     <strong>Tên:</strong> {{ userLastName || "" }}
                   </a>
                 </li>
-                <li v-if="isCustomer || !isLoggedIn">
+                <li v-if="isCustomer ">
                   <a class="dropdown-item">
                     <strong>Ngày Sinh:</strong> {{ userBirthDate || "" }}
                   </a>
                 </li>
-                <li v-if="isCustomer || !isLoggedIn">
+                <li v-if="isCustomer ">
                   <a class="dropdown-item">
                     <strong>Phái:</strong> {{ userGender || "" }}
                   </a>
                 </li>
-                <li v-if="isCustomer || !isLoggedIn">
+                <!-- <li v-if="isCustomer || !isLoggedIn">
                   <a class="dropdown-item">
                     <strong>Địa Chỉ:</strong> {{ userAddress || "" }}
                   </a>
-                </li>
-                <li v-if="isCustomer || !isLoggedIn">
+                </li> -->
+                <li v-if="isCustomer ">
                   <a class="dropdown-item">
                     <strong>Điện Thoại:</strong> {{ userPhone || "" }}
                   </a>
@@ -127,7 +127,7 @@
         </div>
       </div>
     </nav>
-    <router-view />
+    <router-view @profile-updated="checkLoginStatus" />
     <!-- Phần để hiển thị component tương ứng -->
   </div>
 </template>
@@ -157,7 +157,9 @@ export default {
   },
   created() {
     this.checkLoginStatus(); // Kiểm tra trạng thái đăng nhập khi ứng dụng khởi tạo
+   
   },
+ 
   watch: {
     // Theo dõi sự thay đổi của route để cập nhật trạng thái đăng nhập
     $route(to, from) {
@@ -168,23 +170,20 @@ export default {
     checkLoginStatus() {
       this.userRole = AuthService.getRole();
       this.userName = AuthService.getUserName();
-      //this.username = localStorage.getItem("userName");
       this.userFullName = localStorage.getItem("userFullName");
       this.userPosition = localStorage.getItem("userPosition");
       this.userAddress = localStorage.getItem("userAddress");
       this.userPhone = localStorage.getItem("userPhone");
       this.userFirstName = localStorage.getItem("userFirstName");
       this.userLastName = localStorage.getItem("userLastName");
-      // Định dạng lại ngày sinh trước khi hiển thị
+
+      // Định dạng lại ngày sinh để hiển thị trong dropdown
       const rawBirthDate = localStorage.getItem("userBirthDate");
-      this.userBirthDate = rawBirthDate ? moment(rawBirthDate).format("DD/MM/YYYY") : ""; 
+      this.userBirthDate = rawBirthDate ? moment(rawBirthDate, "DD-MM-YYYY").format("DD-MM-YYYY") : "";
 
-
-
-      //this.userBirthDate = localStorage.getItem("userBirthDate");
-      this.userGender = localStorage.getItem("userGender");
      
 
+      this.userGender = localStorage.getItem("userGender");
       this.isLoggedIn = !!AuthService.getToken();
       this.updateUserRoleFlags();
     },

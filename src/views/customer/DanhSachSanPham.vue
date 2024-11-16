@@ -11,8 +11,14 @@
     <div class="row">
       <div class="col-md-4 mb-4" v-for="book in books" :key="book._id">
         <div class="card h-100">
+
           <img :src="getAnhUrl(book.Anh)" class="card-img-top" alt="Ảnh sách"
             style="height: auto; max-height: 350px; object-fit: contain" @click="viewBookDetails(book._id)" />
+
+          <!-- Nếu số lượng còn lại là 0, hiển thị 'Hết hàng' -->
+          <div v-if="book.SoQuyen === 0" class="text-danger text-center mt-3">
+            <strong>Hết hàng</strong>
+          </div>
           <div class="card-body">
             <h5 class="card-title">{{ book.TenSach }}</h5>
             <p class="card-text">
@@ -24,6 +30,7 @@
             <p class="card-text">
               <strong>Số Quyển còn lại:</strong> {{ book.SoQuyen }}
             </p>
+
 
             <div class="input-group mb-3">
               <input type="number" class="form-control" v-model.number="soLuong[book._id]" min="1" :max="book.SoQuyen"
@@ -78,6 +85,11 @@ export default {
 
     async themVaoGioHang(book) {
       const soLuongMuonThem = this.soLuong[book._id] || 1;
+      // Kiểm tra số lượng sách còn lại
+      if (book.SoQuyen === 0) {
+        alert(`Sản phẩm "${book.TenSach}" đã hết hàng!`);
+        return;
+      }
 
       if (soLuongMuonThem <= 0) {
         alert("Số lượng không hợp lệ!");

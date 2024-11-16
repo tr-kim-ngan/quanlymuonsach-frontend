@@ -10,6 +10,7 @@ import ThemNhaXuatBan from "@/views/admin/ThemNhaXuatBan.vue";
 import DanhSachNhaXuatBan from "@/views/admin/DanhSachNhaXuatBan.vue";
 import DanhSachSach from "@/views/admin/DanhSachSach.vue";
 import ThemSach from "@/views/admin/ThemSach.vue";
+import DanhSachDonHang from "@/views/admin/DanhSachDonHang.vue";
 
 // Import thêm các component cho độc giả
 import DanhSachSanPham from "@/views/customer/DanhSachSanPham.vue";
@@ -72,6 +73,16 @@ const routes = [
     component: ThemSach,
     meta: { requiresAuth: true, role: "admin" },
   },
+  {
+    path:"/duyet-don-hang",
+    name:"DanhSachDonHang",
+    component:DanhSachDonHang,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+
+
+
+
   // Thêm route cho khách hàng
   {
     path: "/san-pham",
@@ -86,6 +97,12 @@ const routes = [
     props: true,
     
   },
+  
+
+
+
+
+
  // Route yêu cầu đăng nhập cho khách hàng
   {
     path: "/gio-hang",

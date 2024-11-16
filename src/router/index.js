@@ -112,13 +112,6 @@ const routes = [
     meta: { requiresAuth: true, role: "customer" }
   },
 
-
-
-
-
-  // Route yêu cầu đăng nhập cho khách hàng
-  
-
   // Các router khác có thể thêm vào đây
 ];
 

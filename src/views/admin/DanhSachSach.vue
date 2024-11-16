@@ -21,6 +21,7 @@
                 <span class="header-year">Năm Xuất Bản</span>
                 <span class="header-publisher">Nhà Xuất Bản</span>
                 <span class="header-author">Tác Giả</span>
+                <span class="header-loan-period">Ngày Hạn Mượn</span>
                 <span class="header-action">Thao Tác</span>
             </div>
             <ul class="book-list">
@@ -35,6 +36,7 @@
                         sach.MaNXB ? sach.MaNXB.TenNXB : "Không có nhà xuất bản"
                         }}</span>
                     <span class="book-author">{{ sach.TacGia }}</span>
+                    <span class="book-loan-period">{{ sach.NgayHanMuon }} ngày</span>
                     <div class="action-buttons">
                         <button @click="xemChiTiet(sach)" class="detail-button">
                             Xem Chi Tiết
@@ -62,10 +64,11 @@
                             <p><strong>Số Quyển:</strong> {{ chiTietSach.SoQuyen }}</p>
                             <p><strong>Năm Xuất Bản:</strong> {{ chiTietSach.NamXuatBan }}</p>
                             <p><strong>Tác Giả:</strong> {{ chiTietSach.TacGia }}</p>
+                            <p><strong>Ngày Hạn Mượn:</strong> {{ chiTietSach.NgayHanMuon }} ngày</p>
                             <p>
                                 <strong>Nhà Xuất Bản:</strong> {{ chiTietSach.MaNXB.TenNXB }}
                             </p>
-                            
+
                             <p><strong>Mô Tả:</strong> {{ chiTietSach.MoTa }}</p>
                         </div>
                         <div v-else>
@@ -90,6 +93,10 @@
                                 <input type="text" v-model="chiTietSach.TacGia" id="tacGia" />
                             </div>
                             <div class="form-group">
+                                <label for="ngayHanMuon">Ngày Hạn Mượn:</label>
+                                <input type="number" v-model="chiTietSach.NgayHanMuon" id="ngayHanMuon" required />
+                            </div>
+                            <div class="form-group">
                                 <label for="maNXB">Nhà Xuất Bản:</label>
                                 <select v-model="chiTietSach.MaNXB" id="maNXB" required>
                                     <option v-for="nxb in danhSachNXB" :key="nxb._id" :value="nxb">
@@ -97,7 +104,7 @@
                                     </option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="moTa">Mô Tả:</label>
                                 <textarea v-model="chiTietSach.MoTa" id="moTa" rows="3"></textarea>
@@ -222,6 +229,7 @@ export default {
                 formData.append("MaNXB", this.chiTietSach.MaNXB._id); // Sử dụng _id của nhà xuất bản
                
                 formData.append("MoTa", this.chiTietSach.MoTa);
+                formData.append("NgayHanMuon", this.chiTietSach.NgayHanMuon);
                 // Kiểm tra nếu có ảnh mới
                 if (this.anhMoi) {
                     formData.append("Anh", this.anhMoi);
@@ -340,7 +348,7 @@ export default {
 .header-row,
 .book-item {
     display: grid;
-    grid-template-columns: 3fr 3fr 3fr 3fr 3fr 3fr 3fr 3fr;
+    grid-template-columns: 3fr 3fr 3fr 3fr 3fr 3fr 3fr 3fr 3fr;
     align-items: center;
     padding: 10px 15px;
     text-align: center;

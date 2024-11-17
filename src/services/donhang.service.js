@@ -30,18 +30,18 @@ class DonHangService {
     return response.data;
   }
 
-  // async capNhatTrangThaiDonHang(id, trangThai) {
-  //   const response = await axios.put(`${this.apiUrl}/${id}`, { trangThai });
-  //   return response.data;
-  // }
-  // async capNhatTrangThaiDonHang(id, trangThai) {
-  //   const response = await axios.put(`${this.apiUrl}/duyet/${id}`, { trangThai });
-  //   return response.data;
-  // },
-  async capNhatTrangThaiDonHang(id, data) {
+  
+     async capNhatTrangThaiDonHang(id, data) {
         const response = await axios.put(`${this.apiUrl}/${id}`, data);
         return response.data;
     }
+
+   async capNhatThongTinDonHang(id, data) {
+    const response = await axios.put(`${this.apiUrl}/capnhat-thongtin/${id}`, data);
+    return response.data;
+  }
+
+
 }
 
 export default new DonHangService();

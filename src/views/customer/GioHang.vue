@@ -7,73 +7,99 @@
     </div>
 
     <!-- Hiển thị danh sách sản phẩm trong giỏ hàng -->
-    <div v-else class="row">
-      <div class="col-md-4 mb-4" v-for="item in cartItems" :key="item._id">
-        <div class="card h-100">
-          <img
-            :src="getAnhUrl(item.MaSach.Anh)"
-            class="card-img-top"
-            alt="Ảnh sách"
-            style="height: auto; max-height: 350px; object-fit: contain"
-            @click="viewBookDetails(item.MaSach._id)"
-          />
-
-          <div class="card-body">
-            <h5 class="card-title">{{ item.MaSach.TenSach }}</h5>
-            <p class="card-text">
-              <strong>Đơn Giá:</strong> {{ item.MaSach.DonGia }} VND
-            </p>
-            <p class="card-text">
-              <strong>Ngày Hạn Mượn:</strong>{{ item.MaSach.NgayHanMuon }}
-            </p>
-            <!-- <p class="card-text"><strong>Số Lượng:</strong> {{ item.soLuong }}</p> -->
-            <p class="card-text">
-              <strong>Số Quyển còn lại:</strong> {{ item.MaSach.SoQuyen }}
-            </p>
-            <p class="card-text">
-              <strong>Số Lượng:</strong>
-              <input
-                type="number"
-                v-model.number="item.soLuong"
-                class="form-control"
-                min="1"
-                :max="item.MaSach.SoQuyen"
-                @change="updateCartItem(item)"
-              />
-            </p>
-            <p class="card-text">
-              <strong>Tổng Giá:</strong>
-              {{ item.soLuong * item.MaSach.DonGia }} VND
-            </p>
-            <button
-              class="btn btn-danger w-100"
-              @click="removeCartItem(item._id)"
-            >
-              Xóa khỏi giỏ hàng
-            </button>
-          </div>
-        </div>
-      </div>
+    <div v-else>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Sản phẩm</th>
+            <th>Hạn mượn</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in cartItems" :key="item._id">
+            <td class="product-cell">
+              <img :src="getAnhUrl(item.MaSach.Anh)" alt="Ảnh sách" class="product-image" />
+              {{ item.MaSach.TenSach }}
+            </td>
+            <td>{{ item.MaSach.NgayHanMuon }}</td>
+            <td>
+              <input type="number" v-model.number="item.soLuong" class="form-control" min="1" :max="item.MaSach.SoQuyen"
+                @change="updateCartItem(item)" />
+            </td>
+            <td>{{ item.MaSach.DonGia }} VND</td>
+            <td>{{ item.soLuong * item.MaSach.DonGia }} VND</td>
+            <td>
+              <button class="btn btn-danger" @click="removeCartItem(item._id)">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="text-right"><strong>Tổng thanh toán</strong></td>
+            <td colspan="2"><strong>{{ tongTien }} VND</strong></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
+
+    <!-- Nút "Hoàn tất mượn sách" -->
     <div class="text-center mt-4" v-if="cartItems.length > 0">
-      <button class="btn btn-success w-50" @click="datHang">
+      <button class="btn btn-success w-50" @click="hienThiFormThongTin = true">
         Hoàn tất mượn sách
+      </button>
+    </div>
+
+    <!-- Thông tin thanh toán chỉ hiển thị khi người dùng nhấn "Hoàn tất mượn sách" -->
+    <div v-if="hienThiFormThongTin" class="mt-4">
+      <h4>Thông Tin Người Nhận</h4>
+      <div class="form-group">
+        <label for="tenNguoiNhan">Tên Người Nhận</label>
+        <input type="text" id="tenNguoiNhan" v-model="tenNguoiNhan" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="soDienThoai">Số Điện Thoại</label>
+        <input type="number" id="soDienThoai" v-model="soDienThoai" class="form-control" required min="0" />
+      </div>
+      <div class="form-group">
+        <label for="diaChi">Địa Chỉ</label>
+        <textarea id="diaChi" v-model="diaChi" class="form-control" rows="3" required></textarea>
+      </div>
+      <button class="btn btn-primary w-50 mt-4" @click="datHang">
+        Xác nhận mượn sách
       </button>
     </div>
   </div>
 </template>
 
+
 <script>
 import GioHangService from "@/services/giohang.service";
 import DonHangService from "@/services/donhang.service";
-
 
 export default {
   name: "Cart",
   data() {
     return {
       cartItems: [], // Danh sách các mục trong giỏ hàng
+      tenNguoiNhan: "",
+      soDienThoai: "",
+      diaChi: "",
+      hienThiFormThongTin: false, // Biến để điều khiển hiển thị form thông tin
     };
+  },
+  computed: {
+    tongTien() {
+      return this.cartItems.reduce(
+        (total, item) => total + item.soLuong * item.MaSach.DonGia,
+        0
+      );
+    },
   },
   mounted() {
     this.fetchCartItems(); // Lấy danh sách giỏ hàng khi component được gắn vào
@@ -161,16 +187,14 @@ export default {
           soLuong: item.soLuong,
         }));
 
-        const tongTien = this.cartItems.reduce(
-          (total, item) => total + item.soLuong * item.MaSach.DonGia,
-          0
-        );
-
         // Gọi API để tạo đơn hàng
         const response = await DonHangService.taoDonHang({
           MaDocGia: userId,
           items,
-          tongTien,
+          tongTien: this.tongTien,
+          tenNguoiNhan: this.tenNguoiNhan,
+          soDienThoai: this.soDienThoai,
+          diaChi: this.diaChi,
         });
 
         if (response) {
@@ -194,13 +218,57 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+
+.table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fdf6e4;
+  text-align: center;
 }
 
-.card:hover {
-  transform: scale(1.05);
+thead {
+  background-color: #faf3e3;
 }
+
+.product-cell {
+  display: flex;
+  align-items: center;
+  background-color: #fdf6e4;
+  padding: 10px;
+}
+.product-image {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+
+
+td,
+th {
+  padding: 10px;
+  vertical-align: middle;
+  background-color: #fdf6e4;
+}
+
+tfoot td {
+  font-weight: bold;
+  font-size: 1.1em;
+  text-align: right;
+  background-color: #faf3e3;
+}
+
+.btn-danger {
+  padding: 5px 10px;
+  font-size: 0.9em;
+}
+
+
+
+
 </style>

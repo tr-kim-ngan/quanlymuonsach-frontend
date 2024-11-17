@@ -51,12 +51,39 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Hiển thị thông tin người nhận cho tất cả trạng thái -->
+                    <div class="mt-4">
+                        <h5>Thông tin người nhận:</h5>
+                        <p><strong>Tên người nhận:</strong> {{ selectedOrder.tenNguoiNhan }}</p>
+                        <p><strong>Số điện thoại:</strong> {{ selectedOrder.soDienThoai }}</p>
+                        <p><strong>Địa chỉ:</strong> {{ selectedOrder.diaChi }}</p>
+                    </div>
+
+                    <!-- Form nhập thông tin thanh toán nếu trạng thái đơn hàng là "Chờ xử lý" -->
+                    <div v-if="selectedOrder.trangThai === 'Chờ xử lý'" class="mt-4">
+                        <h5>Thông tin người nhận:</h5>
+                        <form @submit.prevent="capNhatThongTinThanhToan">
+                            <div class="form-group">
+                                <label for="tenNguoiNhan">Tên người nhận:</label>
+                                <input type="text" v-model="tenNguoiNhan" class="form-control" id="tenNguoiNhan"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="soDienThoai">Số điện thoại:</label>
+                                <input type="text" v-model="soDienThoai" class="form-control" id="soDienThoai" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="diaChi">Địa chỉ:</label>
+                                <input type="text" v-model="diaChi" class="form-control" id="diaChi" required>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-3">Cập nhật thông tin</button>
+                        </form>
+                    </div>
+
                     <button class="btn btn-secondary mt-3" @click="quayLaiDanhSach">Quay lại danh sách</button>
                 </div>
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -70,6 +97,9 @@ export default {
             userId: localStorage.getItem("userId"), // ID độc giả từ localStorage
             validStatuses: ['Chờ xử lý', 'Đang giao', 'Đã hoàn thành', 'Đã hủy'],
             selectedOrder: null, // Đơn hàng được chọn để xem chi tiết
+            tenNguoiNhan: "", // Tên người nhận
+            soDienThoai: "", // Số điện thoại người nhận
+            diaChi: "", // Địa chỉ người nhận
         };
     },
     async mounted() {
@@ -99,11 +129,38 @@ export default {
                 alert("Không thể hủy đơn hàng. Vui lòng thử lại sau.");
             }
         },
+        async capNhatThongTinThanhToan() {
+            try {
+                if (this.selectedOrder) {
+                    // Cập nhật thông tin thanh toán vào đơn hàng đã chọn
+                    this.selectedOrder.tenNguoiNhan = this.tenNguoiNhan;
+                    this.selectedOrder.soDienThoai = this.soDienThoai;
+                    this.selectedOrder.diaChi = this.diaChi;
+
+                    await DonHangService.capNhatThongTinDonHang(this.selectedOrder._id, {
+                        tenNguoiNhan: this.tenNguoiNhan,
+                        soDienThoai: this.soDienThoai,
+                        diaChi: this.diaChi,
+                    });
+
+                    alert("Cập nhật thông tin thanh toán thành công!");
+                    this.fetchDonHangs(); // Cập nhật lại danh sách đơn hàng
+                }
+            } catch (error) {
+                console.error("Lỗi khi cập nhật thông tin thanh toán:", error);
+                alert("Không thể cập nhật thông tin thanh toán. Vui lòng thử lại sau.");
+            }
+        }
+,
         formatDate(date) {
             return new Date(date).toLocaleString();
         },
         xemChiTietDonHang(donHang) {
             this.selectedOrder = donHang; // Lưu thông tin đơn hàng để hiển thị chi tiết
+            // Gán giá trị cho các trường thông tin thanh toán nếu đã tồn tại
+            this.tenNguoiNhan = donHang.tenNguoiNhan || "";
+            this.soDienThoai = donHang.soDienThoai || "";
+            this.diaChi = donHang.diaChi || "";
         },
         quayLaiDanhSach() {
             this.selectedOrder = null; // Quay lại danh sách đơn hàng
@@ -123,10 +180,6 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card:hover {
-    transform: scale(1.02);
-    transition: transform 0.2s;
-}
 
 .product-image {
     width: 100px;
@@ -134,11 +187,14 @@ export default {
     object-fit: cover;
     border-radius: 5px;
 }
+
 .product-detail {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-
+.form-group {
+    margin-bottom: 1rem;
+}
 </style>

@@ -2,14 +2,24 @@
   <div class="container mt-5">
     <h2 class="text-center mb-4">Danh Sách Sản Phẩm</h2>
 
+    <!-- Ô nhập tìm kiếm và nút tìm kiếm -->
+    <div class="mb-4 text-center">
+      <div class="input-group w-50 mx-auto">
+        <input type="text" v-model="timKiem" class="form-control" placeholder="Tìm kiếm sách, tác giả, nhà xuất bản..." />
+        <button class="btn btn-primary" @click="thucHienTimKiem">Tìm kiếm</button>
+      </div>
+    </div>
+
     <!-- Chỉ hiển thị thông báo nếu không có sản phẩm -->
-    <p v-if="books.length === 0 && thongBao" class="text-danger text-center">
+    <p v-if="filteredBooks.length === 0 && thongBao" class="text-danger text-center">
       {{ thongBao }}
     </p>
 
+
+
     <!-- Danh sách sản phẩm -->
-    <div class="row">
-      <div class="col-md-4 mb-4" v-for="book in books" :key="book._id">
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-4 col-sm-6" v-for="book in filteredBooks" :key="book._id">
         <div class="card h-100">
 
           <img :src="getAnhUrl(book.Anh)" class="card-img-top" alt="Ảnh sách"
@@ -62,17 +72,40 @@ export default {
       books: [], // Danh sách sách
       soLuong: {}, // Số lượng nhập cho mỗi sách
       thongBao: "", // Thông báo lỗi
+      timKiem: "", // Từ khóa tìm kiếm
     };
   },
   mounted() {
     this.fetchBooks(); // Gọi API lấy danh sách sách khi component được mount
   },
+  computed: {
+    filteredBooks() {
+      if (!this.timKiem) {
+        return this.books;
+      }
+      const tuKhoa = this.timKiem.toLowerCase();
+      return this.books.filter((book) => {
+        const tenSach = book.TenSach ? book.TenSach.toLowerCase() : "";
+        const tacGia = book.TacGia ? book.TacGia.toLowerCase() : "";
+        const nhaXuatBan = book.MaNXB && book.MaNXB.TenNXB ? book.MaNXB.TenNXB.toLowerCase() : "";
+
+        return tenSach.includes(tuKhoa) || tacGia.includes(tuKhoa) || nhaXuatBan.includes(tuKhoa);
+      });
+    }
+  }
+,
+
+
   methods: {
+    thucHienTimKiem() {
+      this.timKiem = this.timKiem.trim(); // Xóa khoảng trắng
+    },
     async fetchBooks() {
       try {
         const response = await axios.get("http://localhost:3000/api/sach");
         this.books = response.data;
-
+        // Log dữ liệu lấy được từ API
+        console.log("Danh sách sách từ API:", this.books);
         // Khởi tạo số lượng mặc định cho mỗi sách
         this.books.forEach((book) => {
           this.$set(this.soLuong, book._id, 1);
@@ -141,12 +174,52 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+.book-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.card-title {
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-input input {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.search-input button {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
+

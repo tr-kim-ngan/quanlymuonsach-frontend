@@ -2,6 +2,19 @@
     <div class="container mt-5">
         <h2 class="text-center mb-4" v-if="!selectedOrder">Danh Sách Đơn Hàng</h2>
         <h2 class="text-center mb-4" v-else>Chi Tiết Đơn Hàng</h2>
+        <!-- Tìm kiếm đơn hàng theo trạng thái -->
+        <div v-if="!selectedOrder" class="mb-4 text-center">
+            <div class="input-group w-50 mx-auto">
+                <select v-model="timKiemTrangThai" class="form-control">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Chờ xử lý">Chờ xử lý</option>
+                    <option value="Đang giao">Đang giao</option>
+                    <option value="Đã hoàn thành">Đã hoàn thành</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
+                <button class="btn btn-primary" @click="thucHienTimKiem">Tìm kiếm</button>
+            </div>
+        </div>
 
         <!-- Danh sách đơn hàng -->
         <div v-if="!selectedOrder">
@@ -9,7 +22,7 @@
                 <p>Bạn chưa có đơn hàng nào.</p>
             </div>
             <div v-else>
-                <div v-for="donHang in donHangs" :key="donHang._id" class="card mb-3">
+                <div v-for="donHang in filteredDonHangs" :key="donHang._id" class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Mã đơn hàng: {{ donHang._id }}</h5>
                         <p><strong>Ngày tạo:</strong> {{ formatDate(donHang.ngayTao) }}</p>
@@ -113,7 +126,16 @@ export default {
             tenNguoiNhan: "", // Tên người nhận
             soDienThoai: "", // Số điện thoại người nhận
             diaChi: "", // Địa chỉ người nhận
+            timKiemTrangThai: "",
         };
+    },
+    computed: {
+        filteredDonHangs() {
+            if (!this.timKiemTrangThai) {
+                return this.donHangs;
+            }
+            return this.donHangs.filter(donHang => donHang.trangThai === this.timKiemTrangThai);
+        },
     },
     async mounted() {
         await this.fetchDonHangs();

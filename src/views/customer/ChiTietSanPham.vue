@@ -11,6 +11,7 @@
                 <p><strong>Năm Xuất Bản:</strong> {{ sach.NamXuatBan }}</p>
                 <p><strong>Giá:</strong> {{ sach.DonGia }} VNĐ</p>
                 <p><strong>Mô Tả:</strong> {{ sach.MoTa }}</p>
+                <p><strong>Nhà Xuất Bản:</strong> {{ sach.MaNXB.TenNXB }}</p>
                 <p>
                     <strong>Ngày Hạn Mượn:</strong> {{ sach.NgayHanMuon }} ngày
                 </p>

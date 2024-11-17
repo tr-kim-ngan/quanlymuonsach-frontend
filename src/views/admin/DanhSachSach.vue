@@ -196,12 +196,25 @@ export default {
             try {
                 await SachService.xoa(id);
                 this.thongBao = "Xóa sách thành công!";
+                alert(this.thongBao); // Thông báo cho người dùng về việc xóa thành công
                 await this.layDanhSachSach();
             } catch (error) {
                 console.error("Lỗi khi xóa sách:", error);
-                this.thongBao = "Có lỗi xảy ra khi xóa sách.";
+
+                // Log phản hồi lỗi để kiểm tra
+                if (error.response) {
+                    console.log("Phản hồi lỗi từ server:", error.response.data);
+                }
+
+                // Hiển thị thông báo lỗi dựa trên phản hồi từ server
+                if (error.response && error.response.data && error.response.data.message) {
+                    this.thongBao = error.response.data.message;
+                } else {
+                    this.thongBao = "Sách này không thể xóa do liên quan đến dữ liệu khác";
+                }
+                alert(this.thongBao);
             }
-        },
+        }, 
         xemChiTiet(sach) {
             this.chiTietSach = { ...sach };
             this.isEditing = false;
@@ -330,20 +343,7 @@ export default {
     justify-content: center;
 }
 
-/* .add-button {
-                background-color: #4169e1;
-                color: #ffffff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: background-color 0.3s;
-            }
 
-            .add-button:hover {
-                background-color: #27408b;
-            } */
 
 .header-row,
 .book-item {

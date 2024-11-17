@@ -1,10 +1,18 @@
 <template>
   <div class="container mt-5">
     <h2 class="text-center mb-4">Giỏ Hàng</h2>
+    <!-- Ô nhập tìm kiếm và nút tìm kiếm -->
+    <div class="mb-4 text-center">
+      <div class="input-group w-50 mx-auto">
+        <input type="text" v-model="timKiem" class="form-control" placeholder="Tìm kiếm sách trong giỏ hàng..." />
+        <button class="btn btn-primary" @click="thucHienTimKiem">Tìm kiếm</button>
+      </div>
+    </div>
     <!-- Hiển thị thông báo nếu giỏ hàng trống -->
     <div v-if="cartItems.length === 0" class="text-center">
       <p>Giỏ hàng của bạn hiện đang trống.</p>
     </div>
+
 
     <!-- Hiển thị danh sách sản phẩm trong giỏ hàng -->
     <div v-else>
@@ -20,11 +28,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in cartItems" :key="item._id">
+          <tr v-for="item in filteredCartItems" :key="item._id">
             <td class="product-cell">
-              <img :src="getAnhUrl(item.MaSach.Anh)" alt="Ảnh sách" class="product-image" />
-              {{ item.MaSach.TenSach }}
+              <div class="product-wrapper">
+                <img :src="getAnhUrl(item.MaSach.Anh)" alt="Ảnh sách" class="product-image" />
+                <span class="product-name">{{ item.MaSach.TenSach }}</span>
+              </div>
             </td>
+
+
             <td>{{ item.MaSach.NgayHanMuon }}</td>
             <td>
               <input type="number" v-model.number="item.soLuong" class="form-control" min="1" :max="item.MaSach.SoQuyen"
@@ -91,6 +103,7 @@ export default {
       soDienThoai: "",
       diaChi: "",
       hienThiFormThongTin: false, // Biến để điều khiển hiển thị form thông tin
+      timKiem: "",
     };
   },
   computed: {
@@ -99,6 +112,15 @@ export default {
         (total, item) => total + item.soLuong * item.MaSach.DonGia,
         0
       );
+    },
+    filteredCartItems() {
+      if (!this.timKiem) {
+        return this.cartItems;
+      }
+      const tuKhoa = this.timKiem.toLowerCase();
+      return this.cartItems.filter((item) => {
+        return item.MaSach.TenSach.toLowerCase().includes(tuKhoa);
+      });
     },
   },
   mounted() {
@@ -219,57 +241,90 @@ export default {
 </script>
 
 
+
+
+
 <style scoped>
 
-
+/* Bảng tổng thể */
 .table {
- 
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  background-color: #fdf6e4;
+  background-color: #fff;
+  /* Màu nền trắng */
   text-align: center;
+  border-collapse: collapse;
+  /* Xóa khoảng cách giữa các viền */
 }
 
-thead {
-  background-color: #fdf6e4;
+/* Phần đầu bảng */
+.table thead th {
+  background-color: #000 !important;
+  /* Màu nền đen */
+  color: #fff !important;
+  /* Chữ màu trắng */
+  border: none;
+  /* Xóa viền nếu cần */
 }
 
+/* Cột sản phẩm */
 .product-cell {
   display: flex;
   align-items: center;
-  background-color: #fdf6e4;
   padding: 10px;
+  background-color: #fff;
+  /* Màu nền trắng */
   border: none;
-}
-.product-image {
-  width: 80px;
-  height: 100px;
-  object-fit: cover;
+  vertical-align: middle;
 }
 
+.product-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 80px;
+  height: auto;
+  object-fit: cover;
+  margin-right: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.product-name {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Dòng và ô */
 td,
 th {
-  
   padding: 10px;
   vertical-align: middle;
-  background-color: #fdf6e4;
+  background-color: #fff;
+  /* Màu nền trắng */
 }
 
 tfoot td {
-  
   font-weight: bold;
   font-size: 1.1em;
   text-align: right;
-  background-color: #faf3e3;
+  background-color: #fff;
+  /* Màu nền trắng */
 }
 
+/* Nút xóa */
 .btn-danger {
   padding: 5px 10px;
   font-size: 0.9em;
 }
-
-
-
-
 </style>
+
+
+
+
+

@@ -3,10 +3,11 @@
         <h2 class="text-center mb-4">Theo Dõi Mượn Sách</h2>
 
         <!-- Bộ lọc và tìm kiếm -->
-        <div class="mb-4 d-flex justify-content-between">
-            <div>
+        <div class="mb-4 d-flex justify-content-center align-items-center filter-search-container">
+            <div class="mr-3">
                 <label for="filter" class="mr-2">Lọc theo trạng thái:</label>
-                <select id="filter" v-model="filter" @change="applyFilter" class="form-control d-inline w-auto">
+                <select id="filter" v-model="filter" @change="applyFilter"
+                    class="form-control short-select d-inline-block">
                     <option value="all">Tất cả</option>
                     <option value="Đang mượn">Đang mượn</option>
                     <option value="Đã trả">Đã trả</option>
@@ -14,7 +15,7 @@
             </div>
             <div>
                 <input type="text" placeholder="Tìm kiếm theo tên độc giả hoặc sách..." v-model="searchTerm"
-                    @input="applySearch" class="form-control" style="max-width: 300px;" />
+                    @input="applySearch" class="form-control short-select  search-input d-inline-block" />
             </div>
         </div>
 
@@ -32,6 +33,7 @@
                         <th>Hạn mượn sách</th>
                         <th>Ngày Mượn</th>
                         <th>Ngày Trả</th>
+                        <th>Số Lượng Sách Mượn</th>
                         <th>Trạng Thái</th>
                     </tr>
                 </thead>
@@ -42,14 +44,16 @@
                         <td>{{ record.TenSach }}</td>
                         <td>
                             {{ record.NgayHanMuon !== "Không có hạn"
-                                ? formatDate(calculateHanMuon(record.NgayMuon, record.NgayHanMuon))
+                            ? formatDate(calculateHanMuon(record.NgayMuon, record.NgayHanMuon))
                             : "Không có hạn" }}
                         </td>
 
 
 
+
                         <td>{{ formatDate(record.NgayMuon) }}</td>
                         <td>{{ record.NgayTra ? formatDate(record.NgayTra) : "Chưa trả" }}</td>
+                        <td>{{ record.soLuong }}</td>
                         <td>
                             <span :class="record.TrangThai === 'Đang mượn' ? 'text-warning' : 'text-success'">
                                 {{ record.TrangThai }}
@@ -89,6 +93,9 @@ export default {
                 alert("Không thể tải dữ liệu theo dõi mượn sách. Vui lòng thử lại sau.");
             }
         },
+        removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        },
         // Tính toán hạn mượn (Ngày hết hạn mượn)
         calculateHanMuon(ngayMuon, ngayHanMuon) {
             if (!ngayMuon || !ngayHanMuon) return "Không có hạn";
@@ -96,9 +103,6 @@ export default {
             const ngayHetHan = new Date(ngayMuonDate.getTime() + ngayHanMuon * 24 * 60 * 60 * 1000);
             return ngayHetHan;
         },
-
-
-
 
 
         // Lọc dữ liệu theo trạng thái
@@ -111,13 +115,12 @@ export default {
         },
         // Tìm kiếm dữ liệu
         applySearch() {
-            const term = this.searchTerm.toLowerCase();
+            const term = this.removeAccents(this.searchTerm);
             this.filteredRecords = this.records.filter(record => {
-                const matchesFilter =
-                    this.filter === "all" || record.TrangThai === this.filter;
+                const matchesFilter = this.filter === "all" || record.TrangThai === this.filter;
                 const matchesSearch =
-                    record.HoTen.toLowerCase().includes(term) ||
-                    record.TenSach.toLowerCase().includes(term);
+                    this.removeAccents(record.HoTen).includes(term) ||
+                    this.removeAccents(record.TenSach).includes(term);
                 return matchesFilter && matchesSearch;
             });
         },
@@ -142,5 +145,24 @@ export default {
 .text-success {
     color: #28a745;
     font-weight: bold;
+}
+
+.filter-search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.short-select {
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+}
+.search-input {
+    width: 350px;
+    /* Độ rộng mới để ô tìm kiếm dài hơn */
+    margin: 0 auto;
+    display: block;
 }
 </style>

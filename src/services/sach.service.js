@@ -25,9 +25,25 @@ class SachService {
   }
 
   // Xóa sách theo ID
-  async xoa(id) {
-    return (await this.api.delete(`${this.baseUrl}/${id}`)).data;
-  }
+  // async xoa(id) {
+  //   return (await this.api.delete(`${this.baseUrl}/${id}`)).data;
+  // }
+// Xóa sách theo ID
+async xoa(id) {
+    try {
+        return (await this.api.delete(`${this.baseUrl}/${id}`)).data;
+    } catch (error) {
+        // Xử lý lỗi từ server và trả về để hiển thị chi tiết hơn trên frontend
+        if (error.response) {
+            throw error.response;
+        }
+        throw error;
+    }
+}
+
+
+
+
 
   // Lấy thông tin chi tiết của một cuốn sách
   async layTheoId(id) {

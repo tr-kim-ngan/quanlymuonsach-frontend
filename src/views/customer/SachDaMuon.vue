@@ -1,7 +1,14 @@
 <template>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Sách Đã Mượn</h2>
-        <div v-if="sachDangMuon.length === 0" class="text-center">
+        <!-- Ô nhập tìm kiếm và nút tìm kiếm -->
+        <div class="mb-4 text-center">
+            <div class="input-group w-50 mx-auto">
+                <input type="text" v-model="timKiem" class="form-control" placeholder="Tìm kiếm theo tên sách..." />
+                <button class="btn btn-primary ml-2" @click="thucHienTimKiem">Tìm kiếm</button>
+            </div>
+        </div>
+        <div v-if="filteredSachDangMuon.length === 0" class="text-center">
             <p>Không có sách nào đang mượn.</p>
         </div>
         <div v-else>
@@ -18,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(record, index) in sachDangMuon" :key="record._id">
+                    <tr v-for="(record, index) in filteredSachDangMuon" :key="record._id">
                         <td>{{ index + 1 }}</td>
                         <td>{{ record.TenSach || 'N/A' }}</td>
                         <td>{{ formatDate(record.NgayMuon) }}</td>
@@ -49,10 +56,22 @@ export default {
     data() {
         return {
             sachDangMuon: [], // Danh sách sách đang mượn
+            timKiem: "",
         };
     },
     async mounted() {
         await this.fetchSachDangMuon();
+    },
+    computed: {
+        filteredSachDangMuon() {
+            if (!this.timKiem) {
+                return this.sachDangMuon;
+            }
+            const tuKhoa = this.timKiem.toLowerCase();
+            return this.sachDangMuon.filter((record) => {
+                return record.TenSach && record.TenSach.toLowerCase().includes(tuKhoa);
+            });
+        },
     },
     methods: {
         // Lấy danh sách sách đang mượn
@@ -83,6 +102,10 @@ export default {
         // Format ngày tháng
         formatDate(date) {
             return new Date(date).toLocaleString();
+        },
+        thucHienTimKiem() {
+            // Bạn có thể thêm logic để xử lý sự kiện tìm kiếm tại đây nếu cần
+            console.log('Tìm kiếm với từ khóa:', this.timKiem);
         },
     },
 };

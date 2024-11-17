@@ -12,6 +12,7 @@
                         <th>Tên Sách</th>
                         <th>Ngày Mượn</th>
                         <th>Hạn Mượn</th>
+                        <th>Số Lượng Mượn</th>
                         <th>Trạng Thái</th>
                         <th>Hành Động</th>
                     </tr>
@@ -22,6 +23,7 @@
                         <td>{{ record.TenSach || 'N/A' }}</td>
                         <td>{{ formatDate(record.NgayMuon) }}</td>
                         <td>{{ record.HanMuon ? `${record.HanMuon} ngày` : 'Không có hạn' }}</td>
+                        <td>{{ record.soLuong }}</td>
                         <td>
                             <span :class="record.TrangThai === 'Đang mượn' ? 'text-warning' : 'text-success'">
                                 {{ record.TrangThai }}

@@ -221,7 +221,9 @@ export default {
 
 <style scoped>
 
+
 .table {
+ 
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
@@ -230,7 +232,7 @@ export default {
 }
 
 thead {
-  background-color: #faf3e3;
+  background-color: #fdf6e4;
 }
 
 .product-cell {
@@ -238,25 +240,24 @@ thead {
   align-items: center;
   background-color: #fdf6e4;
   padding: 10px;
+  border: none;
 }
 .product-image {
   width: 80px;
   height: 100px;
   object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
 }
-
-
 
 td,
 th {
+  
   padding: 10px;
   vertical-align: middle;
   background-color: #fdf6e4;
 }
 
 tfoot td {
+  
   font-weight: bold;
   font-size: 1.1em;
   text-align: right;

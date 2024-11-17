@@ -22,7 +22,7 @@
                                 {{ hoaDon.trangThai }}
                             </span>
                         </p>
-                        <button class="btn btn-primary" @click="xemChiTietHoaDon(hoaDon)">Xem chi tiết</button>
+                        <button class="btn btn-primary" @click="xemChiTietHoaDon(hoaDon._id)">Xem chi tiết</button>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,16 @@
                                 <p><strong>Số lượng:</strong> {{ item.soLuong }}</p>
                             </div>
                         </div>
+                        <!-- Hiển thị thông tin người nhận từ hóa đơn -->
+                        <div class="mt-4">
+                            <h5>Thông tin người nhận:</h5>
+                            <p><strong>Tên người nhận:</strong> {{ selectedHoaDon.tenNguoiNhan }}</p>
+                            <p><strong>Số điện thoại:</strong> {{ selectedHoaDon.soDienThoai }}</p>
+                            <p><strong>Địa chỉ:</strong> {{ selectedHoaDon.diaChi }}</p>
+                        </div>
+
                     </div>
+
                     <button class="btn btn-secondary mt-3" @click="quayLaiDanhSach">Quay lại danh sách</button>
                 </div>
             </div>
@@ -86,9 +95,22 @@ export default {
             }
         },
         // Hiển thị chi tiết hóa đơn
-        xemChiTietHoaDon(hoaDon) {
-            this.selectedHoaDon = hoaDon; // Lưu hóa đơn được chọn để hiển thị chi tiết
+        async xemChiTietHoaDon(hoaDonId) {
+            try {
+                const response = await HoaDonService.layChiTietHoaDon(hoaDonId);
+                this.selectedHoaDon = response.data;
+
+                // Kiểm tra xem các thông tin có tồn tại không, nếu không thì gán mặc định "Không có thông tin"
+                this.selectedHoaDon.tenNguoiNhan = this.selectedHoaDon.tenNguoiNhan || "Không có thông tin";
+                this.selectedHoaDon.soDienThoai = this.selectedHoaDon.soDienThoai || "Không có thông tin";
+                this.selectedHoaDon.diaChi = this.selectedHoaDon.diaChi || "Không có thông tin";
+            } catch (error) {
+                console.error("Lỗi khi lấy chi tiết hóa đơn:", error);
+                alert("Không thể lấy chi tiết hóa đơn. Vui lòng thử lại sau.");
+            }
         },
+
+
         // Quay lại danh sách hóa đơn
         quayLaiDanhSach() {
             this.selectedHoaDon = null; // Xóa hóa đơn được chọn để quay lại danh sách
@@ -124,11 +146,11 @@ export default {
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
 
 .card:hover {
-    transform: scale(1.02);
+    transform: scale(1.02); 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

@@ -14,14 +14,27 @@
                         <h5 class="card-title">Mã đơn hàng: {{ donHang._id }}</h5>
                         <p><strong>Ngày tạo:</strong> {{ formatDate(donHang.ngayTao) }}</p>
                         <p><strong>Tổng tiền:</strong> {{ donHang.tongTien }} VND</p>
-                        <p><strong>Trạng thái:</strong>
+                        <!-- <p><strong>Trạng thái:</strong>
                             <span v-if="validStatuses.includes(donHang.trangThai)">
                                 {{ donHang.trangThai }}
                             </span>
                             <span v-else>
                                 Trạng thái không xác định
                             </span>
+                        </p> -->
+                        <p><strong>Trạng thái hiện tại: </strong>
+                            <span class="trang-thai" :class="{
+                            'cho-xu-ly': donHang.trangThai === 'Chờ xử lý',
+                            'dang-giao': donHang.trangThai === 'Đang giao',
+                            'da-hoan-thanh': donHang.trangThai === 'Đã hoàn thành',
+                            'da-huy': donHang.trangThai === 'Đã hủy'
+                        }">
+                                {{ donHang.trangThai }}
+                            </span>
                         </p>
+
+
+
                         <button class="btn btn-primary mr-2" @click="xemChiTietDonHang(donHang)">Xem chi tiết</button>
                         <button v-if="donHang.trangThai === 'Chờ xử lý'" class="btn btn-danger"
                             @click="huyDonHang(donHang._id)">
@@ -177,7 +190,51 @@ export default {
 
 <style scoped>
 .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Màu sắc trạng thái */
+.trang-thai {
+    font-weight: bold;
+    padding: 0.2rem 0.7rem;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 0.85rem;
+    /* Giảm kích thước chữ */
+}
+
+.trang-thai.cho-xu-ly {
+    color: #ffffff;
+    background-color: #FF9800;
+    /* Cam - Chờ xử lý */
+}
+
+.trang-thai.dang-giao {
+    color: #ffffff;
+    background-color: #2196F3;
+    /* Xanh dương - Đang giao */
+}
+
+.trang-thai.da-hoan-thanh {
+    color: #ffffff;
+    background-color: #4CAF50;
+    /* Xanh lá - Đã hoàn thành */
+}
+
+.trang-thai.da-huy {
+    color: #ffffff;
+    background-color: #F44336;
+    /* Đỏ - Đã hủy */
 }
 
 

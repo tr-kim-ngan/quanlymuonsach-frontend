@@ -38,13 +38,19 @@ class HoaDonService {
         },
     });
     return response.data;
-}
+  }
 
   async capNhatTrangThaiHoaDon(hoaDonId, trangThai) {
     return (
         await axios.put(`${API_URL}/${hoaDonId}`, { trangThai })
       ).data;
   }
+  
+   layChiTietHoaDon(hoaDonId) {
+    return axios.get(`${API_URL}/${hoaDonId}`);
+  }
+
+
 
 
 }

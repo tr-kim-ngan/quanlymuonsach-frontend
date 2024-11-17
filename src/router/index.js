@@ -11,6 +11,9 @@ import DanhSachNhaXuatBan from "@/views/admin/DanhSachNhaXuatBan.vue";
 import DanhSachSach from "@/views/admin/DanhSachSach.vue";
 import ThemSach from "@/views/admin/ThemSach.vue";
 import DanhSachDonHang from "@/views/admin/DanhSachDonHang.vue";
+import QuanLyHoaDon from "@/views/admin/QuanLyHoaDon.vue";
+import TheoDoiMuonSach from "@/views/admin/TheoDoiMuonSach.vue";
+
 
 // Import thêm các component cho độc giả
 import DanhSachSanPham from "@/views/customer/DanhSachSanPham.vue";
@@ -19,6 +22,7 @@ import GioHang from "@/views/customer/GioHang.vue";
 import DonHang from "@/views/customer/DonHang.vue";
 import SachDaMuon from "@/views/customer/SachDaMuon.vue";
 import ChinhSuaThongTinKhachHang from "@/views/customer/ChinhSuaThongTinKhachHang.vue";
+import HoaDon from "@/views/customer/HoaDon.vue";
 
 
 const routes = [
@@ -79,6 +83,18 @@ const routes = [
     component:DanhSachDonHang,
     meta: { requiresAuth: true, role: "admin" },
   },
+  {
+    path: "/quan-ly-hoa-don",
+    name: "QuanLyHoaDon",
+    component: QuanLyHoaDon,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+      path: "/theo-doi-muon-sach",
+      name: "TheoDoiMuonSach",
+      component: TheoDoiMuonSach,
+      meta: { requiresAuth: true, role: "admin" },
+    },
 
 
 
@@ -98,10 +114,6 @@ const routes = [
     
   },
   
-
-
-
-
 
  // Route yêu cầu đăng nhập cho khách hàng
   {
@@ -128,6 +140,13 @@ const routes = [
     component: ChinhSuaThongTinKhachHang,
     meta: { requiresAuth: true, role: "customer" }
   },
+  {
+    path: "/hoa-don",
+    name: "HoaDon",
+    component: HoaDon,
+    meta: { requiresAuth: true, role: "customer" },
+  },
+
 
   // Các router khác có thể thêm vào đây
 ];

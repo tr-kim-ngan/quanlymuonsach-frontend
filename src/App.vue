@@ -21,6 +21,14 @@
             <li v-if="isAdmin" class="nav-item">
               <router-link to="/duyet-don-hang" class="nav-link">Duyệt đơn hàng</router-link>
             </li>
+            <li v-if="isAdmin" class="nav-item">
+              <router-link to="/quan-ly-hoa-don" class="nav-link">Quản lý hóa đơn</router-link>
+            </li>
+            <li v-if="isAdmin" class="nav-item">
+              <router-link to="/theo-doi-muon-sach" class="nav-link">Theo Dõi Mượn Sách</router-link>
+            </li>
+
+
 
             <!-- Menu cho khách hàng -->
             <li v-if="!isAdmin" class="nav-item">
@@ -32,9 +40,14 @@
             <li v-if="!isAdmin" class="nav-item">
               <a class="nav-link" @click="checkAuthAndNavigate('/don-hang')">Đơn hàng</a>
             </li>
+
+            <li v-if="!isAdmin" class="nav-item">
+              <a class="nav-link" @click="checkAuthAndNavigate('/hoa-don')">Hóa đơn</a>
+            </li>
             <li v-if="!isAdmin" class="nav-item">
               <a class="nav-link" @click="checkAuthAndNavigate('/sach-da-muon')">Sách đã mượn</a>
             </li>
+
           </ul>
 
           <!-- Thông tin người dùng -->
@@ -42,7 +55,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-               {{ isAdmin && isLoggedIn ? userName : "Tên đăng nhập" }}
+                {{ isAdmin && isLoggedIn ? userName : "Tên đăng nhập" }}
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <!-- Thông tin admin -->

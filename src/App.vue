@@ -189,7 +189,7 @@
 <script>
 import AuthService from "@/services/auth.service";
 import moment from "moment";
-// import AppFooter from "./components/AppFooter.vue";
+import AppFooter from "./components/AppFooter.vue";
 export default {
   name: "App",
   components: {

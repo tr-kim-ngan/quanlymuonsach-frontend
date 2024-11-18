@@ -19,6 +19,7 @@
                         <th>Tên Sách</th>
                         <th>Ngày Mượn</th>
                         <th>Hạn Mượn</th>
+                        <th>Hạn Trả Sách</th>
                         <th>Số Lượng Mượn</th>
                         <th>Trạng Thái</th>
                         <th>Hành Động</th>
@@ -30,6 +31,7 @@
                         <td>{{ record.TenSach || 'N/A' }}</td>
                         <td>{{ formatDate(record.NgayMuon) }}</td>
                         <td>{{ record.HanMuon ? `${record.HanMuon} ngày` : 'Không có hạn' }}</td>
+                        <td>{{ tinhHanTraSach(record.NgayMuon, record.HanMuon) }}</td>
                         <td>{{ record.soLuong }}</td>
                         <td>
                             <span :class="record.TrangThai === 'Đang mượn' ? 'text-warning' : 'text-success'">
@@ -102,6 +104,12 @@ export default {
         // Format ngày tháng
         formatDate(date) {
             return new Date(date).toLocaleString();
+        },
+        // Tính hạn trả sách
+        tinhHanTraSach(ngayMuon, hanMuon) {
+            const ngayMuonDate = new Date(ngayMuon);
+            ngayMuonDate.setDate(ngayMuonDate.getDate() + parseInt(hanMuon));
+            return ngayMuonDate.toLocaleString(); // Hiển thị đầy đủ ngày và giờ cụ thể
         },
         thucHienTimKiem() {
             // Bạn có thể thêm logic để xử lý sự kiện tìm kiếm tại đây nếu cần

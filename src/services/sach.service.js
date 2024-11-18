@@ -10,7 +10,7 @@ class SachService {
   // Lấy tất cả sách
   async layTatCa() {
    const response = await this.api.get(this.baseUrl);
-    console.log('Dữ liệu lấy từ API:', response.data); // Thêm dòng này để kiểm tra dữ liệu nhận được từ API
+    console.log('Dữ liệu lấy từ API:', response.data);
     return response.data;
   }
 
@@ -24,10 +24,6 @@ class SachService {
     })).data;
   }
 
-  // Xóa sách theo ID
-  // async xoa(id) {
-  //   return (await this.api.delete(`${this.baseUrl}/${id}`)).data;
-  // }
 // Xóa sách theo ID
 async xoa(id) {
     try {
@@ -42,15 +38,11 @@ async xoa(id) {
 }
 
 
-
-
-
   // Lấy thông tin chi tiết của một cuốn sách
   async layTheoId(id) {
     return (await this.api.get(`${this.baseUrl}/${id}`)).data;
   }
 
-  // Cập nhật sách
   // Cập nhật sách
 async capNhat(id, data) {
     return (await this.api.put(`${this.baseUrl}/${id}`, data, {

@@ -4,7 +4,7 @@ import apiClient from "./api.service.js";
 // Tạo class dịch vụ Nhà Xuất Bản để gọi các API liên quan
 class NhaXuatBanService {
   constructor(baseUrl = "/nhaxuatban") {
-    this.api = apiClient; // Sử dụng trực tiếp apiClient mà không thay đổi baseURL toàn cục
+    this.api = apiClient; 
     this.baseUrl = baseUrl;
   }
   // Lấy tất cả nhà xuất bản
@@ -22,7 +22,6 @@ class NhaXuatBanService {
       throw new Error("Địa chỉ Gmail không hợp lệ.");
     }
 
-    // Tiếp tục xử lý nếu Gmail hợp lệ
     try {
       const response = await this.api.post(this.baseUrl, data);
       return response.data;

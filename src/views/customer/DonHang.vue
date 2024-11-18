@@ -279,8 +279,8 @@ export default {
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
               box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   line-height: 1.5;
-  max-width: 600px; /* Giới hạn chiều rộng tối đa */
-  margin: 0 auto; /* Căn giữa khung */
+  max-width: 600px; 
+  margin: 0 auto; 
 }
 
 .card:hover {
@@ -288,42 +288,36 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Màu sắc trạng thái */
 .trang-thai {
   font-weight: bold;
   padding: 0.2rem 0.7rem;
   border-radius: 4px;
   display: inline-block;
   font-size: 0.85rem;
-  /* Giảm kích thước chữ */
 }
 
 .trang-thai.cho-xu-ly {
   color: #ffffff;
   background-color: #ff9800;
-  /* Cam - Chờ xử lý */
 }
 
 .trang-thai.dang-giao {
   color: #ffffff;
   background-color: #2196f3;
-  /* Xanh dương - Đang giao */
 }
 
 .trang-thai.da-hoan-thanh {
   color: #ffffff;
   background-color: #4caf50;
-  /* Xanh lá - Đã hoàn thành */
 }
 
 .trang-thai.da-huy {
   color: #ffffff;
   background-color: #f44336;
-  /* Đỏ - Đã hủy */
 }
 
 .product-image {
-  flex-shrink: 0; /* Không co giãn ảnh */
+  flex-shrink: 0; 
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -333,7 +327,7 @@ export default {
 .product-detail {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 4px; /* Giảm khoảng cách giữa các sản phẩm */
+  margin-bottom: 4px; 
   font-size: 1rem;
 }
 

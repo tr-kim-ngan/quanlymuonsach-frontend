@@ -98,7 +98,6 @@ export default {
                     alert('Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.');
                     return;
                 }
-                // Chuyển đổi ngày sinh về định dạng dd-mm-yyyy trước khi lưu lên cơ sở dữ liệu
                 const formattedNgaySinh = moment(this.NgaySinh, ["YYYY-MM-DD", "DD-MM-YYYY"]).format("DD-MM-YYYY");
 
                 const response = await axios.put(`http://localhost:3000/api/docgia/${userId}`, {
@@ -139,12 +138,10 @@ export default {
     max-width: 600px;
     margin-top: 20px;
     margin-bottom: 20px;
-    /* Thêm khoảng cách phía dưới để dễ cuộn */
 }
 
 body {
     overflow-y: auto;
-    /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
 }
 
 html,

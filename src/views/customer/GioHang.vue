@@ -172,7 +172,6 @@ export default {
   },
   methods: {
     kiemTraSo() {
-      // Chỉ cho phép các ký tự số (0-9)
       this.soDienThoai = this.soDienThoai.replace(/[^0-9]/g, '');
     },
     async fetchCartItems() {
@@ -289,35 +288,26 @@ export default {
 </script>
 
 <style scoped>
-/* Bảng tổng thể */
 .table {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
   background-color: #fff;
-  /* Màu nền trắng */
   text-align: center;
   border-collapse: collapse;
-  /* Xóa khoảng cách giữa các viền */
 }
 
-/* Phần đầu bảng */
 .table thead th {
   background-color: #000 !important;
-  /* Màu nền đen */
   color: #fff !important;
-  /* Chữ màu trắng */
   border: none;
-  /* Xóa viền nếu cần */
 }
 
-/* Cột sản phẩm */
 .product-cell {
   display: flex;
   align-items: center;
   padding: 10px;
   background-color: #fff;
-  /* Màu nền trắng */
   border: none;
   vertical-align: middle;
 }
@@ -343,13 +333,11 @@ export default {
   text-align: center;
 }
 
-/* Dòng và ô */
 td,
 th {
   padding: 10px;
   vertical-align: middle;
   background-color: #fff;
-  /* Màu nền trắng */
 }
 
 tfoot td {
@@ -357,23 +345,19 @@ tfoot td {
   font-size: 1.1em;
   text-align: right;
   background-color: #fff;
-  /* Màu nền trắng */
 }
 
-/* Nút xóa */
 .btn-danger {
   padding: 5px 10px;
   font-size: 0.9em;
 }
-/* Khung bao quanh form thông tin */
-/* Khoảng cách giữa khung và mép màn hình */
 .form-wrapper {
-  border: 2px solid #007bff; /* Đường viền màu xanh */
-  border-radius: 10px; /* Bo tròn góc */
-  padding: 20px; /* Khoảng cách bên trong */
-  background-color: #f9f9f9; /* Màu nền nhạt */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  border: 2px solid #007bff; 
+  border-radius: 10px; 
+  padding: 20px; 
+  background-color: #f9f9f9; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   max-width: 600px;
-  margin: 70px auto; /* Tạo khoảng cách trên và dưới */
+  margin: 70px auto; 
 }
 </style>

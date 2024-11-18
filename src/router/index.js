@@ -148,7 +148,6 @@ const routes = [
   },
 
 
-  // Các router khác có thể thêm vào đây
 ];
 
 const router = createRouter({

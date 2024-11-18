@@ -74,7 +74,7 @@ import "flatpickr/dist/flatpickr.min.css";
 export default {
   data() {
     return {
-      username: "", // Thêm thuộc tính username
+      username: "", 
       password: "",
       hoLot: "",
       ten: "",
@@ -87,7 +87,7 @@ export default {
   },
   mounted() {
     flatpickr(this.$refs.ngaySinhInput, {
-      dateFormat: "d-m-Y", // Định dạng dd-mm-yyyy
+      dateFormat: "d-m-Y", 
     });
   },
   methods: {

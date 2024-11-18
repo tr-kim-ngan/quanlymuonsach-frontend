@@ -36,38 +36,34 @@ export default {
 </script>
 
 <style scoped>
-/* Thiết lập chính cho footer */
 .footer {
-  background-color: #f8f9fa; /* Màu nền sáng */
+  background-color: #f8f9fa; 
   color: #333;
-  /* text-align: center; */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
   padding: 0px 0;
-  border-top: 1px solid #ddd; /* Viền trên nhẹ */
-  width: 100%; /* Chiếm toàn bộ chiều ngang */
-  position: relative; /* Không đè lên nội dung */
+  border-top: 1px solid #ddd;
+  width: 100%;
+  position: relative;
   margin-top: 150px; 
 }
 
 
-/* Container chính */
 .footer-container {
   display: flex;
   justify-content: space-between;
   padding: 20px 50px;
-  flex-wrap: wrap; /* Đảm bảo bố cục đẹp trên màn hình nhỏ */
+  flex-wrap: wrap; 
 }
 
-/* Các phần nội dung trong footer */
 .footer-section {
-  flex: 1 1 200px; /* Đảm bảo mỗi phần chiếm một không gian vừa phải */
+  flex: 1 1 200px;
   margin: 10px;
 }
 
 .footer-section h5 {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #007bff; /* Màu xanh đẹp */
+  color: #007bff; 
   margin-bottom: 10px;
 }
 
@@ -77,7 +73,6 @@ export default {
   margin: 5px 0;
 }
 
-/* Liên kết mạng xã hội */
 .social-links a {
   margin: 0 10px;
   color: #007bff;
@@ -90,9 +85,8 @@ export default {
   color: #0056b3;
 }
 
-/* Phần dưới cùng */
 .footer-bottom {
-  background-color: #e9ecef; /* Màu xám nhạt */
+  background-color: #e9ecef; 
   color: #333;
   padding: 10px 0;
   font-size: 0.9rem;

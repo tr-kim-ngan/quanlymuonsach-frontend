@@ -1,15 +1,13 @@
 // Import thư viện Axios
 import axios from 'axios';
 
-// Tạo một instance của Axios với cấu hình mặc định
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000/api', // Địa chỉ URL của backend
+  baseURL: 'http://localhost:3000/api',
   headers: {
-    'Content-Type': 'application/json', // Thiết lập kiểu dữ liệu là JSON
+    'Content-Type': 'application/json', 
   },
 });
 
-// Thêm interceptor để xử lý lỗi (nếu cần)
 apiClient.interceptors.response.use(
   response => response, // Trả về phản hồi nếu thành công
   error => {
@@ -18,5 +16,4 @@ apiClient.interceptors.response.use(
   }
 );
 
-// Xuất apiClient để sử dụng trong các file khác
 export default apiClient;

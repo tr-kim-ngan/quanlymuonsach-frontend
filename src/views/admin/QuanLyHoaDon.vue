@@ -144,10 +144,6 @@ export default {
                 alert("Không thể xác nhận thanh toán hóa đơn. Vui lòng thử lại sau.");
             }
         },
-        // Xem chi tiết hóa đơn
-        // xemChiTietHoaDon(hoaDon) {
-        //     this.selectedHoaDon = hoaDon; // Gắn hóa đơn được chọn vào biến `selectedHoaDon`
-        // },
 
         async xemChiTietHoaDon(hoaDon) {
             try {
@@ -226,19 +222,15 @@ export default {
     font-size: 0.9rem;
     font-weight: bold;
     color: #fff;
-    /* Chữ màu trắng */
     display: inline-block;
 }
 
-/* Màu nền cho trạng thái */
 .badge-success {
     background-color: #4CAF50;
-    /* Màu xanh */
 }
 
 .badge-danger {
     background-color: #F44336;
-    /* Màu đỏ */
 }
 
 .text-success {
@@ -264,10 +256,7 @@ export default {
 }
 .short-select {
     width: 200px;
-    /* Độ rộng của dropdown */
     margin: 0 auto;
-    /* Căn giữa theo chiều ngang */
     display: block;
-    /* Đảm bảo dropdown là một khối để có thể căn giữa */
 }
 </style>

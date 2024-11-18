@@ -135,16 +135,13 @@ export default {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    /* background-color: #f9f9f9; */
     border-radius: 10px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
 }
 
 .card {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
-    /* background-color: #fff; */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }

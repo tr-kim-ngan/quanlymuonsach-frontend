@@ -169,7 +169,6 @@ export default {
 }
 .search-input {
     width: 350px;
-    /* Độ rộng mới để ô tìm kiếm dài hơn */
     margin: 0 auto;
     display: block;
 }

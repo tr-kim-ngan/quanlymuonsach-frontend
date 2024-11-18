@@ -189,7 +189,7 @@
 <script>
 import AuthService from "@/services/auth.service";
 import moment from "moment";
-import AppFooter from "./components/AppFooter.vue";
+// import AppFooter from "./components/AppFooter.vue";
 export default {
   name: "App",
   components: {
@@ -285,25 +285,24 @@ export default {
     linear-gradient(135deg, #e8f7fc, #36aaed);
    background-blend-mode: screen;
    flex-direction: column;
-    min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là chiều cao màn hình */
+    min-height: 100vh; 
 }
 .content {
   flex: 1;
    margin-bottom: 50px;
-  /* padding-bottom: 80px; Khoảng trống bên dưới, khớp với chiều cao footer */
 }
 
 .navbar {
-  background-color: #050e18 !important; /* Màu xanh */
-  color: #ffffff !important; /* Màu trắng */
+  background-color: #050e18 !important;
+  color: #ffffff !important; 
 }
 
 .nav-link {
-  color: #ffffff !important; /* Màu chữ trắng */
+  color: #ffffff !important; 
 }
 
 .nav-link:hover {
-  color: #6fe1e1 !important; /* Màu vàng nhạt */
+  color: #6fe1e1 !important; 
 }
 
 

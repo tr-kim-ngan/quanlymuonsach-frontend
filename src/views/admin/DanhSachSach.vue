@@ -371,8 +371,8 @@ export default {
 
 .book-item:hover {
     background-color: #e6f7ff;
-    transform: translateY(-3px); /* Nâng mục sách lên cao hơn một chút để hiệu ứng rõ ràng hơn */
-    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); Thay đổi bóng để tạo cảm giác nâng cao hơn */
+    transform: translateY(-3px);
+    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); */
 }
 
 .book-name,
@@ -501,7 +501,6 @@ export default {
     box-sizing: border-box;
 }
 
-/* Style adjustments for select dropdown */
 .form-group select {
     appearance: none;
     -webkit-appearance: none;

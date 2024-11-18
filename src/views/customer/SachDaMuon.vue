@@ -19,7 +19,7 @@
                         <th>Tên Sách</th>
                         <th>Ngày Mượn</th>
                         <th>Hạn Mượn</th>
-                        <th>Hạn Trả Sách</th>
+                        <th>Ngày Trả Dự Kiến</th>
                         <th>Số Lượng Mượn</th>
                         <th>Trạng Thái</th>
                         <th>Hành Động</th>
@@ -103,16 +103,30 @@ export default {
         },
         // Format ngày tháng
         formatDate(date) {
-            return new Date(date).toLocaleString();
+            const d = new Date(date);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+      return `${day}-${month}-${year}, ${time}`;
         },
         // Tính hạn trả sách
         tinhHanTraSach(ngayMuon, hanMuon) {
-            const ngayMuonDate = new Date(ngayMuon);
-            ngayMuonDate.setDate(ngayMuonDate.getDate() + parseInt(hanMuon));
-            return ngayMuonDate.toLocaleString(); // Hiển thị đầy đủ ngày và giờ cụ thể
+           if (!ngayMuon || !hanMuon) {
+            return 'Không có hạn';
+        }
+        const ngayMuonDate = new Date(ngayMuon);
+        ngayMuonDate.setDate(ngayMuonDate.getDate() + parseInt(hanMuon));
+        const day = String(ngayMuonDate.getDate()).padStart(2, '0');
+        const month = String(ngayMuonDate.getMonth() + 1).padStart(2, '0');
+        const year = ngayMuonDate.getFullYear();
+        const hours = String(ngayMuonDate.getHours()).padStart(2, '0');
+        const minutes = String(ngayMuonDate.getMinutes()).padStart(2, '0');
+        const seconds = String(ngayMuonDate.getSeconds()).padStart(2, '0');
+        return `${day}-${month}-${year}, ${hours}:${minutes}:${seconds}`; thể
         },
         thucHienTimKiem() {
-            // Bạn có thể thêm logic để xử lý sự kiện tìm kiếm tại đây nếu cần
+           
             console.log('Tìm kiếm với từ khóa:', this.timKiem);
         },
     },
@@ -121,46 +135,41 @@ export default {
 
 
 <style scoped>
-/* Nền trắng cho bảng */
 .table {
-    background-color: #ffffff; /* Màu nền trắng */
+    background-color: #ffffff; 
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 10px; /* Bo góc cho bảng */
+    border-radius: 10px; 
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header của bảng */
 .thead-dark th {
-    background-color: #343a40; /* Màu nền đậm */
-    color: #ffffff; /* Màu chữ trắng */
+    background-color: #343a40; 
+    color: #ffffff; 
     text-align: center;
     font-weight: bold;
 }
 
-/* Dòng trong bảng */
 tbody tr {
-    background-color: #ffffff; /* Nền trắng cho các hàng */
+    background-color: #ffffff; 
     transition: background-color 0.3s ease;
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1; /* Nền xám nhạt khi hover */
+    background-color: #f1f1f1;
 }
 
-/* Căn giữa các nội dung */
 td, th {
     text-align: center;
     vertical-align: middle;
     padding: 10px;
-    border: 1px solid #ddd; /* Viền nhẹ */
+    border: 1px solid #ddd;
 }
 
-/* Nút "Trả sách" */
 .btn-danger {
     font-size: 0.875rem;
-    background-color: #dc3545; /* Đỏ */
+    background-color: #dc3545; 
     color: #ffffff;
     border: none;
     border-radius: 5px;
@@ -168,10 +177,9 @@ td, th {
 }
 
 .btn-danger:hover {
-    background-color: #c82333; /* Đỏ đậm hơn khi hover */
+    background-color: #c82333; 
 }
 
-/* Nền input tìm kiếm */
 .input-group .form-control {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -188,7 +196,6 @@ td, th {
     background-color: #0056b3;
 }
 
-/* Nền bảng không tràn */
 
 
 </style>

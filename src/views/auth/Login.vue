@@ -12,7 +12,6 @@
                     <input type="password" v-model="password" class="form-control login-input" required />
                 </div>
                 <button type="submit" class="btn btn-primary w-100 login-button">Đăng nhập</button>
-                <!-- Thêm phần này để hiển thị thông báo lỗi -->
                 <p v-if="errorMessage" class="text-danger text-center mt-3">{{ errorMessage }}</p>
             </form>
         </div>

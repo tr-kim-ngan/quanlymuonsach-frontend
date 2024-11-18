@@ -96,7 +96,6 @@ export default {
 
 
 <style scoped>
-/* Thêm các style cho component nếu cần */
 .container {
     margin-top: 20px;
 }

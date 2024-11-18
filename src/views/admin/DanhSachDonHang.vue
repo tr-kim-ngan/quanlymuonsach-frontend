@@ -210,7 +210,6 @@ export default {
     transform: scale(1.02);
 }
 
-/* Định dạng tiêu đề */
 .card-title {
     font-size: 1rem;
     font-weight: bold;
@@ -218,14 +217,12 @@ export default {
     margin-bottom: 0rem;
 }
 
-/* Căn chỉnh nội dung */
 .card-body p {
     font-size: 0.8rem;
     color: #555;
     margin-bottom: 0.3rem;
 }
 
-/* Màu sắc trạng thái */
 .trang-thai {
     font-weight: bold;
     padding: 0.2rem 0.7rem;
@@ -255,18 +252,13 @@ export default {
 }
 .btn {
     padding: 0.4rem 0.9rem;
-        /* Giảm padding để nhỏ gọn hơn */
     font-size: 0.8rem;
-    /* Kích thước chữ giống nhau */
     border-radius: 4px;
-    /* Bo góc đồng nhất */
     font-weight: bold;
-    /* Độ dày chữ giống nhau */
     display: inline-block;
     cursor: pointer;
 }
 
-/* Nút cập nhật trạng thái */
 .btn-success {
     background-color: #4CAF50;
     border: none;
@@ -283,7 +275,6 @@ export default {
     background-color: #45a049;
 }
 
-/* Dropdown */
 .form-select {
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -293,7 +284,6 @@ export default {
     max-width: 200px;
 }
 
-/* Hiệu ứng loading */
 .text-center p {
     font-size: 1rem;
     font-style: italic;

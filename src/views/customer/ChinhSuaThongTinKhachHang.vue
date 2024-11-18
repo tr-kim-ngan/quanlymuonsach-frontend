@@ -3,7 +3,7 @@
         <h3>Chỉnh sửa thông tin của bạn</h3>
         <form @submit.prevent="updateProfile">
 
-            
+           
             <div class="mb-3">
                 <label for="Ten" class="form-label">Tên:</label>
                 <input type="text" class="form-control" id="Ten" v-model="Ten" />
@@ -41,13 +41,15 @@
 import AuthService from "@/services/auth.service";
 import axios from "axios";
 import moment from "moment";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+
 
 
 export default {
     name: "ChinhSuaThongTinKhachHang",
     data() {
         return {
-           
             HoLot: "",
             Ten: "",
             NgaySinh: "",
@@ -65,22 +67,29 @@ export default {
             console.error("Không tìm thấy userId trong localStorage. Vui lòng đăng nhập lại.");
         }
     },
+    mounted() {
+         this.initFlatpickr();
+    },
+    watch: {
+        NgaySinh(val) {
+            if (val) {
+                this.initFlatpickr();
+            }
+        }
+    },
     methods: {
         layThongTinKhachHang() {
-            //this.username = localStorage.getItem("userName"); // Lấy từ localStorage, không sửa
             this.HoLot = localStorage.getItem("userFirstName") || "";
             this.Ten = localStorage.getItem("userLastName") || "";
-
             const ngaySinh = localStorage.getItem("userBirthDate");
             this.NgaySinh = ngaySinh ? moment(ngaySinh, "DD-MM-YYYY").format("YYYY-MM-DD") : "";
-
-
             this.Phai = localStorage.getItem("userGender") || "";
             this.DiaChi = localStorage.getItem("userAddress") || "";
             this.DienThoai = localStorage.getItem("userPhone") || "";
             const userId = localStorage.getItem("userId");
             console.log("User ID trong layThongTinKhachHang:", userId);
         },
+       
         async updateProfile() {
             try {
                 const userId = localStorage.getItem('userId');
@@ -89,11 +98,11 @@ export default {
                     alert('Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.');
                     return;
                 }
-
                 // Chuyển đổi ngày sinh về định dạng dd-mm-yyyy trước khi lưu lên cơ sở dữ liệu
                 const formattedNgaySinh = moment(this.NgaySinh, ["YYYY-MM-DD", "DD-MM-YYYY"]).format("DD-MM-YYYY");
 
                 const response = await axios.put(`http://localhost:3000/api/docgia/${userId}`, {
+                   username: this.username,
                     HoLot: this.HoLot,
                     Ten: this.Ten,
                     NgaySinh: formattedNgaySinh,
@@ -103,6 +112,7 @@ export default {
                 });
 
                 // Lưu lại thông tin cập nhật vào localStorage
+                
                 localStorage.setItem("userFirstName", this.HoLot);
                 localStorage.setItem("userLastName", this.Ten);
                 localStorage.setItem("userBirthDate", formattedNgaySinh);

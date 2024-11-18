@@ -22,7 +22,7 @@
                 <p>Đang tải danh sách đơn hàng...</p>
             </div>
             <div v-else-if="filteredDonHangs.length === 0" class="text-center">
-                <p>Không có đơn hàng nào.</p>
+                <p>Chưa có đơn hàng nào 😊</p>
             </div>
             <div v-else>
                 <div v-for="donHang in filteredDonHangs" :key="donHang._id" class="card mb-3">
@@ -144,7 +144,7 @@ export default {
             }
             try {
                 await DonHangService.capNhatTrangThaiDonHang(id, { trangThai: newStatus });
-                alert("Cập nhật trạng thái thành công!");
+                alert("Cập nhật trạng thái thành công! 😊");
                 this.fetchDonHangs();
             } catch (error) {
                 console.error("Lỗi khi cập nhật trạng thái:", error);
@@ -186,11 +186,20 @@ export default {
 
 <style scoped>
 /* Định dạng card */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #f0f8ff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .card {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     border: 1px solid #ddd;
     border-radius: 6px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
     background-color: #fff;
     margin-bottom: 1rem;
     padding: 0.8rem;

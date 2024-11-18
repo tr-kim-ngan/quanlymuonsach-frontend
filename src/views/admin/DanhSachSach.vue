@@ -360,15 +360,19 @@ export default {
     margin: 0;
 }
 
+
 .book-item {
+    margin-bottom: 15px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, transform 0.4s ease, box-shadow 0.3s ease; /* Thêm transition cho transform và box-shadow */
 }
 
 .book-item:hover {
     background-color: #e6f7ff;
+    transform: translateY(-3px); /* Nâng mục sách lên cao hơn một chút để hiệu ứng rõ ràng hơn */
+    /* box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); Thay đổi bóng để tạo cảm giác nâng cao hơn */
 }
 
 .book-name,

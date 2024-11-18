@@ -14,7 +14,7 @@
         <!-- Danh sách hóa đơn -->
         <div v-if="!selectedHoaDon">
             <div v-if="filteredHoaDons.length === 0" class="text-center">
-                <p>Không có hóa đơn nào.</p>
+                <p>Không có hóa đơn nào 😉</p>
             </div>
             <div v-else>
                 <div v-for="hoaDon in filteredHoaDons" :key="hoaDon._id" class="card mb-3">
@@ -96,7 +96,8 @@ export default {
             hoaDons: [], // Danh sách hóa đơn
             selectedHoaDon: null, // Hóa đơn đang được xem chi tiết
             searchStatus: "",
-            filteredHoaDons: []
+            filteredHoaDons: [],
+            selectedStatus: "",
         };
     },
     async mounted() {
@@ -135,7 +136,7 @@ export default {
             try {
                 if (confirm("Bạn có chắc chắn muốn xác nhận thanh toán hóa đơn này?")) {
                     await HoaDonService.capNhatTrangThaiHoaDon(id, "Đã thanh toán"); // Gọi API cập nhật trạng thái
-                    alert("Hóa đơn đã được xác nhận thanh toán!");
+                    alert("Hóa đơn đã được xác nhận thanh toán! 😚 ");
                     await this.fetchHoaDons(); // Cập nhật danh sách hóa đơn
                 }
             } catch (error) {
@@ -185,6 +186,14 @@ export default {
 
 
 <style scoped>
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #f0f8ff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .card {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6);
     border: 1px solid #ddd;

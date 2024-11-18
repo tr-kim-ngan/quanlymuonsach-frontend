@@ -151,7 +151,7 @@ export default {
         const response = await GioHangService.themVaoGioHang(data);
 
         if (response) {
-          alert(`Sản phẩm "${book.TenSach}" đã được thêm vào giỏ hàng!`);
+          alert(`Sản phẩm "${book.TenSach}" đã được thêm vào giỏ hàng! 😍`);
         }
       } catch (error) {
         console.error("Lỗi khi thêm vào giỏ hàng:", error);

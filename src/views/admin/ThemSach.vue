@@ -100,7 +100,7 @@ export default {
                 }
 
                 await SachService.themMoi(formData);
-                alert("Thêm sách thành công!");
+                alert("Thêm sách thành công! 😚");
             } catch (error) {
                 console.error("Lỗi khi thêm sách:", error);
                 alert("Có lỗi xảy ra khi thêm sách.");

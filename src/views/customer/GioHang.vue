@@ -4,15 +4,21 @@
     <!-- Ô nhập tìm kiếm và nút tìm kiếm -->
     <div class="mb-4 text-center">
       <div class="input-group w-50 mx-auto">
-        <input type="text" v-model="timKiem" class="form-control" placeholder="Tìm kiếm sách trong giỏ hàng..." />
-        <button class="btn btn-primary" @click="thucHienTimKiem">Tìm kiếm</button>
+        <input
+          type="text"
+          v-model="timKiem"
+          class="form-control"
+          placeholder="Tìm kiếm sách trong giỏ hàng..."
+        />
+        <button class="btn btn-primary" @click="thucHienTimKiem">
+          Tìm kiếm
+        </button>
       </div>
     </div>
     <!-- Hiển thị thông báo nếu giỏ hàng trống -->
     <div v-if="cartItems.length === 0" class="text-center">
       <p>Giỏ hàng của bạn hiện đang trống.</p>
     </div>
-
 
     <!-- Hiển thị danh sách sản phẩm trong giỏ hàng -->
     <div v-else>
@@ -21,6 +27,7 @@
           <tr>
             <th>Sản phẩm</th>
             <th>Hạn mượn</th>
+            <th>Số lượng còn lại</th>
             <th>Số lượng</th>
             <th>Đơn giá</th>
             <th>Thành tiền</th>
@@ -31,16 +38,29 @@
           <tr v-for="item in filteredCartItems" :key="item._id">
             <td class="product-cell">
               <div class="product-wrapper">
-                <img :src="getAnhUrl(item.MaSach.Anh)" alt="Ảnh sách" class="product-image" />
+                <!-- <img :src="getAnhUrl(item.MaSach.Anh)" alt="Ảnh sách" class="product-image" /> -->
+                <img
+                  :src="getAnhUrl(item.MaSach.Anh)"
+                  alt="Ảnh sách"
+                  class="product-image cursor-pointer"
+                  @click="viewBookDetails(item.MaSach._id)"
+                />
                 <span class="product-name">{{ item.MaSach.TenSach }}</span>
               </div>
             </td>
 
-
             <td>{{ item.MaSach.NgayHanMuon }}</td>
+
+            <td>{{ item.MaSach.SoQuyen }}</td>
             <td>
-              <input type="number" v-model.number="item.soLuong" class="form-control" min="1" :max="item.MaSach.SoQuyen"
-                @change="updateCartItem(item)" />
+              <input
+                type="number"
+                v-model.number="item.soLuong"
+                class="form-control"
+                min="1"
+                :max="item.MaSach.SoQuyen"
+                @change="updateCartItem(item)"
+              />
             </td>
             <td>{{ item.MaSach.DonGia }} VND</td>
             <td>{{ item.soLuong * item.MaSach.DonGia }} VND</td>
@@ -53,8 +73,12 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" class="text-right"><strong>Tổng thanh toán</strong></td>
-            <td colspan="2"><strong>{{ tongTien }} VND</strong></td>
+            <td colspan="4" class="text-right">
+              <strong>Tổng thanh toán</strong>
+            </td>
+            <td colspan="2">
+              <strong>{{ tongTien }} VND</strong>
+            </td>
           </tr>
         </tfoot>
       </table>
@@ -68,19 +92,39 @@
     </div>
 
     <!-- Thông tin thanh toán chỉ hiển thị khi người dùng nhấn "Hoàn tất mượn sách" -->
-    <div v-if="hienThiFormThongTin" class="mt-4">
+    <div v-if="hienThiFormThongTin" class="form-wrapper mt-4">
       <h4>Thông Tin Người Nhận</h4>
       <div class="form-group">
         <label for="tenNguoiNhan">Tên Người Nhận</label>
-        <input type="text" id="tenNguoiNhan" v-model="tenNguoiNhan" class="form-control" required />
+        <input
+          type="text"
+          id="tenNguoiNhan"
+          v-model="tenNguoiNhan"
+          class="form-control"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="soDienThoai">Số Điện Thoại</label>
-        <input type="number" id="soDienThoai" v-model="soDienThoai" class="form-control" required min="0" />
+        <input
+          type="text"
+          id="soDienThoai"
+          v-model="soDienThoai"
+          class="form-control"
+          @input="kiemTraSo"
+          required
+        />
       </div>
+
       <div class="form-group">
         <label for="diaChi">Địa Chỉ</label>
-        <textarea id="diaChi" v-model="diaChi" class="form-control" rows="3" required></textarea>
+        <textarea
+          id="diaChi"
+          v-model="diaChi"
+          class="form-control"
+          rows="3"
+          required
+        ></textarea>
       </div>
       <button class="btn btn-primary w-50 mt-4" @click="datHang">
         Xác nhận mượn sách
@@ -88,7 +132,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import GioHangService from "@/services/giohang.service";
@@ -122,11 +165,16 @@ export default {
         return item.MaSach.TenSach.toLowerCase().includes(tuKhoa);
       });
     },
+    
   },
   mounted() {
     this.fetchCartItems(); // Lấy danh sách giỏ hàng khi component được gắn vào
   },
   methods: {
+    kiemTraSo() {
+      // Chỉ cho phép các ký tự số (0-9)
+      this.soDienThoai = this.soDienThoai.replace(/[^0-9]/g, '');
+    },
     async fetchCartItems() {
       try {
         const userId = localStorage.getItem("userId"); // Lấy ID người dùng đã đăng nhập
@@ -220,7 +268,7 @@ export default {
         });
 
         if (response) {
-          alert("Đơn hàng đã được tạo thành công!");
+          alert("Đơn hàng đã được tạo thành công! 😚");
           // Xóa toàn bộ giỏ hàng sau khi đặt hàng
           await GioHangService.xoaToanBoGioHang(userId);
           this.fetchCartItems(); // Làm mới giỏ hàng
@@ -228,7 +276,7 @@ export default {
         }
       } catch (error) {
         console.error("Lỗi khi đặt hàng:", error);
-        alert("Không thể hoàn tất mượn sách. Vui lòng thử lại sau.");
+        alert("Không thể hoàn tất mượn sách. Vui lòng xem lại");
       }
     },
 
@@ -240,12 +288,7 @@ export default {
 };
 </script>
 
-
-
-
-
 <style scoped>
-
 /* Bảng tổng thể */
 .table {
   width: 100%;
@@ -322,9 +365,15 @@ tfoot td {
   padding: 5px 10px;
   font-size: 0.9em;
 }
+/* Khung bao quanh form thông tin */
+/* Khoảng cách giữa khung và mép màn hình */
+.form-wrapper {
+  border: 2px solid #007bff; /* Đường viền màu xanh */
+  border-radius: 10px; /* Bo tròn góc */
+  padding: 20px; /* Khoảng cách bên trong */
+  background-color: #f9f9f9; /* Màu nền nhạt */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  max-width: 600px;
+  margin: 70px auto; /* Tạo khoảng cách trên và dưới */
+}
 </style>
-
-
-
-
-

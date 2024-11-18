@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import TheoDoiMuonSachService from '@/services/theodoiMuonSach.service';
+import TheoDoiMuonSachService from '@/services/theoDoiMuonSach.service';
 
 export default {
     data() {
@@ -91,7 +91,7 @@ export default {
             try {
                 if (confirm('Bạn có chắc chắn muốn trả sách này?')) {
                     await TheoDoiMuonSachService.traSach(id);
-                    alert('Trả sách thành công!');
+                    alert('Trả sách thành công! Xin cảm ơn bạn 😚');
                     await this.fetchSachDangMuon(); // Làm mới danh sách
                 }
             } catch (error) {
@@ -111,18 +111,77 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.text-warning {
-    color: orange;
+/* Nền trắng cho bảng */
+.table {
+    background-color: #ffffff; /* Màu nền trắng */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px; /* Bo góc cho bảng */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+/* Header của bảng */
+.thead-dark th {
+    background-color: #343a40; /* Màu nền đậm */
+    color: #ffffff; /* Màu chữ trắng */
+    text-align: center;
     font-weight: bold;
 }
 
-.text-success {
-    color: green;
-    font-weight: bold;
+/* Dòng trong bảng */
+tbody tr {
+    background-color: #ffffff; /* Nền trắng cho các hàng */
+    transition: background-color 0.3s ease;
 }
 
+tbody tr:hover {
+    background-color: #f1f1f1; /* Nền xám nhạt khi hover */
+}
+
+/* Căn giữa các nội dung */
+td, th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #ddd; /* Viền nhẹ */
+}
+
+/* Nút "Trả sách" */
 .btn-danger {
     font-size: 0.875rem;
+    background-color: #dc3545; /* Đỏ */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
+
+.btn-danger:hover {
+    background-color: #c82333; /* Đỏ đậm hơn khi hover */
+}
+
+/* Nền input tìm kiếm */
+.input-group .form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-group .btn-primary {
+    border-radius: 5px;
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.input-group .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Nền bảng không tràn */
+
+
 </style>
+

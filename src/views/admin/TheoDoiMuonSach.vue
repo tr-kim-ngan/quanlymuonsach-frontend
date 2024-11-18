@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import TheoDoiMuonSachService from "@/services/theodoiMuonSach.service";
+import TheoDoiMuonSachService from "@/services/theoDoiMuonSach.service";
 
 export default {
     data() {
@@ -133,6 +133,14 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #f0f8ff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .table {
     margin-top: 20px;
 }

@@ -45,16 +45,16 @@
       <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th>#</th>
-            <th>Tên Độc Giả</th>
-            <th>Số Điện Thoại</th>
-            <th>Tên Sách</th>
-            <th>Hạn mượn sách</th>
-            <th>Ngày Mượn</th>
-            <th>Ngày Trả</th>
-            <th>Số Lượng Sách Mượn</th>
-            <th>Trạng Thái</th>
-            <th>Hành Động</th>
+            <th  class="col-width">#</th>
+            <th  class="col-width">Tên Độc Giả</th>
+            <th  class="col-width">Số Điện Thoại</th>
+            <th  class="col-width">Tên Sách</th>
+            <th  class="col-width">Hạn mượn sách</th>
+            <th  class="col-width">Ngày Mượn</th>
+            <th  class="col-width">Ngày Trả</th>
+            <th  class="col-width">Số Lượng Sách Mượn</th>
+            <th  class="col-width">Trạng Thái</th>
+            <th  class="col-width">Hành Động</th>
           </tr>
         </thead>
         <tbody>
@@ -202,7 +202,7 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 900px;
+  max-width: 1700px;
   margin: 50px auto;
   background-color: #f0f8ff;
   padding: 30px;
@@ -211,6 +211,23 @@ export default {
 }
 .table {
   margin-top: 20px;
+}
+th {
+  font-size: 14px; 
+  white-space: nowrap;
+}
+
+
+th:nth-child(4),
+td:nth-child(4) {
+  width: 25%; 
+}
+
+
+
+th.col-width,
+td.col-width {
+  width: 10%; 
 }
 
 .text-warning {

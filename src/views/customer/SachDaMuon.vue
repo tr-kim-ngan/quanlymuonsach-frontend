@@ -86,7 +86,7 @@ export default {
     };
   },
   async mounted() {
-    await this.fetchSachDangMuon();
+    await this.fetchLichSuMuonSach();
   },
   computed: {
     filteredSachDangMuon() {
@@ -101,9 +101,9 @@ export default {
   },
   methods: {
     // Lấy danh sách sách đang mượn
-    async fetchSachDangMuon() {
+    async fetchLichSuMuonSach() {
       try {
-        const response = await TheoDoiMuonSachService.laySachDangMuon(
+        const response = await TheoDoiMuonSachService.layLichSuMuonSach(
           localStorage.getItem("userId")
         );
         this.sachDangMuon = response;
@@ -131,7 +131,7 @@ export default {
         if (confirm("Bạn có chắc chắn muốn trả sách này?")) {
           await TheoDoiMuonSachService.yeuCauTraSach(id);
           alert("Yêu cầu trả sách đã được gửi, xin vui lòng đợi xác nhận!");
-          await this.fetchSachDangMuon(); // Làm mới danh sách
+          await this.fetchLichSuMuonSach(); // Làm mới danh sách
         }
       } catch (error) {
         console.error("Lỗi khi trả sách:", error);

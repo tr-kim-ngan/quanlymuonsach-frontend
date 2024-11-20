@@ -20,6 +20,12 @@ class TheoDoiMuonSachService {
     const response = await axios.get(`${API_URL}/da-tra/${MaDocGia}`);
     return response.data;
   }
+  // Lấy toàn bộ lịch sử mượn sách của một độc giả
+  async layLichSuMuonSach(MaDocGia) {
+    const response = await axios.get(`${API_URL}/lich-su/${MaDocGia}`);
+    return response.data;
+  }
+
 
   // Trả sách
   // async traSach(id) {

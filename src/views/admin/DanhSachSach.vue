@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="header-container">
-            <h2>Danh Sách Sách</h2>
+            <h2>Quản Lý Sách</h2>
             <div class="search-container">
                 <input type="text" v-model="timKiem" class="search-input" placeholder="Tìm kiếm " />
                 <button class="search-button">Tìm kiếm</button>

@@ -40,6 +40,11 @@ class DonHangService {
     const response = await axios.put(`${this.apiUrl}/capnhat-thongtin/${id}`, data);
     return response.data;
   }
+  // Cập nhật số lượng sách sau khi đơn hàng bị hủy
+  async capNhatSoLuongSauHuy(id) {
+    const response = await axios.put(`${API_URL}/capnhat-soluong/${id}`);
+    return response.data;
+  }
 
 
 }

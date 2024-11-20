@@ -143,8 +143,15 @@ export default {
                 return;
             }
             try {
-                await DonHangService.capNhatTrangThaiDonHang(id, { trangThai: newStatus });
-                alert("Cập nhật trạng thái thành công! 😊");
+                 //await DonHangService.capNhatTrangThaiDonHang(id, { trangThai: newStatus });
+                     const response = await DonHangService.capNhatTrangThaiDonHang(id, { trangThai: newStatus });
+
+                 // Nếu trạng thái mới là "Đã hủy", cập nhật lại số lượng sách về kho
+               if (response && response.message === 'Cập nhật trạng thái thành công') {
+                    alert("Cập nhật trạng thái thành công! 😊");
+                    } else {
+                    alert("Đã có lỗi xảy ra, nhưng yêu cầu đã được thực hiện.");
+                    }
                 this.fetchDonHangs();
             } catch (error) {
                 console.error("Lỗi khi cập nhật trạng thái:", error);

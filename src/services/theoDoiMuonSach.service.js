@@ -22,10 +22,25 @@ class TheoDoiMuonSachService {
   }
 
   // Trả sách
-async traSach(id) {
+  // async traSach(id) {
+  //   const response = await axios.put(`${API_URL}/tra-sach/${id}`);
+  //   return response.data;
+  // }
+  // Cập nhật trạng thái của sách
+
+  // Gửi yêu cầu trả sách
+ async yeuCauTraSach(id) {
   const response = await axios.put(`${API_URL}/tra-sach/${id}`);
   return response.data;
 }
+
+  // Xác nhận trả sách
+async xacNhanTraSach(id) {
+  const response = await axios.put(`${API_URL}/xac-nhan-tra-sach/${id}`);
+  return response.data;
+}
+
+
 
 
 }

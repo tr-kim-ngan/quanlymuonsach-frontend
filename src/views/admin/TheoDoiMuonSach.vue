@@ -29,6 +29,7 @@
                     <tr>
                         <th>#</th>
                         <th>Tên Độc Giả</th>
+                        <th>Số Điện Thoại</th>
                         <th>Tên Sách</th>
                         <th>Hạn mượn sách</th>
                         <th>Ngày Mượn</th>
@@ -41,6 +42,7 @@
                     <tr v-for="(record, index) in filteredRecords" :key="record._id">
                         <td>{{ index + 1 }}</td>
                         <td>{{ record.HoTen }}</td>
+                         <td>{{ record.DienThoai }}</td>
                         <td>{{ record.TenSach }}</td>
                         <td>
                             {{ record.NgayHanMuon !== "Không có hạn"

@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="anh">Ảnh (Chọn Từ Máy):</label>
-                <input type="file" @change="chonAnh" id="anh" required />
+                <input type="file" @change="chonAnh" id="anh" accept="image/jpeg, image/jpg, image/png" required />
             </div>
             <div class="button-group">
                 <button type="submit" class="btn-submit">Thêm Sách</button>

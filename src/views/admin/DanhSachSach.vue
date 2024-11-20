@@ -111,7 +111,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="anh">Thay Đổi Ảnh:</label>
-                                <input type="file" @change="chonAnh" id="anh" />
+                                <input type="file" @change="chonAnh" id="anh" accept="image/jpeg, image/jpg, image/png" />
                             </div>
                         </div>
                     </div>
